@@ -147,7 +147,7 @@ class Application(QApplication):
         self.quit_on_stop = True
         self.communicator.menu.emit()
         if self.sync_thread is not None and self.sync_thread.isAlive():
-            # Ask the conntroller to stop: the synchronization loop will in turn
+            # Ask the controller to stop: the synchronization loop will in turn
             # call notify_sync_stopped and finally handle_stop
             self.controller.stop()
         else:
@@ -264,8 +264,8 @@ class Application(QApplication):
     def update_credentials(self, local_folder):
         sb = self.controller.get_server_binding(local_folder)
         if prompt_authentication(
-            self.controller, local_folder, app=self, is_url_readonly=True,
-            url=sb.server_url, username=sb.remote_user):
+            self.controller, local_folder, is_url_readonly=True,
+            url=sb.server_url, username=sb.remote_user, app=self):
             log.debug("Credentials for %s successfully updated.", local_folder)
 
     @QtCore.Slot()
