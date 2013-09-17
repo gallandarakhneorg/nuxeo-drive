@@ -1018,3 +1018,35 @@ class TestIntegrationSynchronization(IntegrationTestCase):
         self.wait()
         syn.loop(delay=0.1, max_loops=1)
         self.assertFalse(local.exists('/test.odt'))
+        
+    def test_synchronize_paged_request(self):
+        LastKnownState.page_size = 1
+        remote = self.remote_document_client_1
+        local = LocalClient(os.path.join(self.local_nxdrive_folder_1,
+                                         self.workspace_title))
+        ctl = self.controller_1
+        ctl.bind_server(self.local_nxdrive_folder_1, self.nuxeo_url,
+                        self.user_1, self.password_1)
+        ctl.bind_root(self.local_nxdrive_folder_1, self.workspace)
+        ctl.synchronizer.update_synchronize_server(self.sb_1)
+
+        remote.make_file(self.workspace, u'File 1.txt', content=b"aaa")
+        ctl.synchronizer.update_synchronize_server(self.sb_1)
+        self.assertTrue(local.exists('/File 1.txt'))
+        
+        remote.make_file(self.workspace, u'File 2.txt', content=b"bbb")
+        ctl.synchronizer.update_synchronize_server(self.sb_1)
+        self.assertTrue(local.exists('/File 2.txt'))
+        
+        remote.make_file(self.workspace, u'File 3.txt', content=b"ccc")
+        ctl.synchronizer.update_synchronize_server(self.sb_1)
+        self.assertTrue(local.exists('/File 3.txt'))
+        
+        remote.make_file(self.workspace, u'File 4.txt', content=b"ddd")
+        ctl.synchronizer.update_synchronize_server(self.sb_1)
+        self.assertTrue(local.exists('/File 4.txt'))
+
+        remote.make_file(self.workspace, u'File 5.txt', content=b"eee")
+        ctl.synchronizer.update_synchronize_server(self.sb_1)
+        self.assertTrue(local.exists('/File 5.txt'))
+
