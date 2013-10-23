@@ -1,3 +1,9 @@
+nuxeo-drive (5.7.3-0arakhne5) raring; urgency=low
+
+  * Merge with master Git.
+
+ -- Stephane GALLAND <galland@arakhne.org>  Wed, 23 Oct 2013 20:35:52 +0200
+
 nuxeo-drive (5.7.3-0arakhne4) raring; urgency=low
 
   * Add manual page.
